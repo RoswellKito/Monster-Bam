@@ -7,11 +7,9 @@ hide empty members
 class Joueur {
   id : String
   nom : String
-}
-class Carte {
-  id : String
-  effet : String
-  rarete : intS
+  argent : int
+  deck : Deck
+  amis[] : Joueur[]
 }
 
 class Magie{
@@ -26,23 +24,44 @@ class Monstre{
   type : Monstre
   carte : Carte
 }
-class duelliste{}
-class Duel{}
-class Deck{}
-class magasin{}
-class booster{}
+
+class Carte {
+  id : String
+  effet : String
+  rarete : intS
+}
+
+class Duel{
+  joueur1 : Joueur
+  joueur2 : Joueur
+}
+class Deck{
+  deck[] : Carte[]
+}
+class magasin{
+  bosters[] : booster[]
+}
+class booster{
+  id : String
+  cartes[] : Carte[]
+}
+class Bot{
+  id : String
+  nom : String
+  deck : Deck
+  niveau : ?
+}
 
 
-PR "1" *-- "42" Pays : Contient >
-PR "1" *-- "6" Continent : Est-\ndivisé-\nen >
-Continent "1" *-- "4, 6,\n7, 9,\n12" Pays : Groupe >
-Pays "1" -- "1..*" Pays : Est-voisin-de >
-JeuRisk "1" -l- "1" PR : Est-joué-sur >
-JeuRisk "1" -d- "5" Dé : Inclut >
-Joueur "   2:6" -l- "1" JeuRisk : Joue >
-Joueur "1" -- "1..*" Pays : Contrôle >
-(Joueur, Pays) .. Occupation
-Pays "1" -l- "1..*" Attaque : Lance >
-Pays "1" -- "1..*\n" Attaque : Défend-contre >
-Joueur "1" -- "1,2,3" Dé : Jette >
+Magie "1" --> "*" Carte : est une >
+Piege "1" --> "*" Carte : est une >
+Monstre "1" --> "*" Carte : est une >
+magasin "*" -- "1" booster : contient >
+Joueur "*" -- "1" magasin : achete des cartes au >
+Deck "1" -- "*" Carte : contient des >
+Joueur "1" -- "1" Deck : possede un >
+Joueur "2" -- "1" Duel : participe a >
+Bot "2" -- "1" Duel : participe a >
+
+
 @enduml
